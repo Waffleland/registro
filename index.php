@@ -11,14 +11,14 @@ if(array_key_exists('username',$_POST) OR array_key_exists('password',$_POST)){
         echo"<p>La contraseña es obligaria</p>";
     }
     else{
-        $query="SELECT username FROM usuarios WHERE username='".$_POST['username']."'";
+        $query="SELECT username FROM usuarios WHERE username='".mysqli_real_escape_string($enlace,$_POST['username'])."'";
         $result = mysqli_query($enlace,$query);
         if(mysqli_num_rows($result)>0){
             echo"<p>Ese nombre de usuario ya está registrado, intenta con otro</p>";
         }
         else{
             //añadir a nuestro usuario a la BD
-            $query="INSERT INTO usuarios(username,password) VALUES('".$_POST['username']."','".$_POST['password']."')";
+            $query="INSERT INTO usuarios(username,password) VALUES('".mysqli_real_escape_string($enlace,$_POST['username'])."','".mysqli_real_escape_string($enlace,$_POST['password'])."')";
             if (mysqli_query($enlace,$query)){
                 echo"<p>Bienvenido, has registrado tu cuenta</p>";
             }
